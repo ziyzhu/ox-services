@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "name": "Ox Services",
+  "services": [
+    "mcp:aws",
+    "web:blueprint.bryanjohnson.com",
+    "web:clinicaltrials.gov",
+    "web:dailymed.nlm.nih.gov",
+    "web:frontierdermpartners.modmedapp.com",
+    "web:matchatennis.com",
+    "web:my.pacificsciencecenter.org",
+    "web:oftendining.com",
+    "web:www.chictr.org.cn",
+    "web:www.inhousepharmacy.vu",
+    "web:www.skinceuticals.com",
+    "web:www.usvisascheduling.com"
+  ]
+}
