@@ -1,0 +1,355 @@
+{
+  "domain": "analog.com",
+  "name": "Analog Devices",
+  "description": "查询 ADI 产品，并比较美国 Sample & Buy 页面中的库存、价格、交期和购买渠道。",
+  "baseUrl": "https://www.analog.com/en/products.html",
+  "faviconUrl": "https://www.analog.com/media/favicon/adi-icon-iphone-retina-180x180.png",
+  "actions": [
+    {
+      "id": "searchProducts",
+      "label": "搜索产品",
+      "description": "按关键词或型号搜索 Analog Devices 产品。",
+      "baseUrl": "https://www.analog.com/en/search.html?q={query}",
+      "requireAuth": false,
+      "requireApproval": false,
+      "blocking": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "snippet": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "title",
+                "url",
+                "snippet"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "getPurchasingDetails",
+      "label": "获取购买详情",
+      "description": "获取一个 ADI 精确型号的库存、价格、交期和购买渠道。",
+      "requireAuth": false,
+      "requireApproval": false,
+      "blocking": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 80,
+            "pattern": "^[A-Za-z0-9+_.-]+$"
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "US"
+            ],
+            "default": "US"
+          }
+        },
+        "required": [
+          "model"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/purchaseResult"
+      }
+    },
+    {
+      "id": "compareParts",
+      "label": "比较型号",
+      "description": "比较最多 20 个 ADI 精确型号的库存、价格、交期和购买渠道。",
+      "requireAuth": false,
+      "requireApproval": false,
+      "blocking": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "models": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 80,
+              "pattern": "^[A-Za-z0-9+_.-]+$"
+            }
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "US"
+            ],
+            "default": "US"
+          }
+        },
+        "required": [
+          "models"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/purchaseResult"
+            }
+          },
+          "retrievedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "retrievedAt"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "getSignInUrl",
+      "label": "打开登录页面",
+      "description": "打开官方 myAnalog 登录或注册页面。",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "getSignInState",
+      "label": "检查登录状态",
+      "description": "检查当前 Analog.com 页面会话是否具有未过期的 myAnalog 登录令牌。",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "signedIn": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "signedIn"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "$defs": {
+    "seller": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "stock": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "purchaseAvailable": {
+          "type": "boolean"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "stock",
+        "purchaseAvailable",
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "priceTier": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "string"
+        },
+        "unitPrice": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "quantity",
+        "unitPrice"
+      ],
+      "additionalProperties": false
+    },
+    "purchaseResult": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "family": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": "string"
+        },
+        "productUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleBuyUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifecycle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "adiStock": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "leadTime": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/priceTier"
+          }
+        },
+        "sampleAvailable": {
+          "type": "boolean"
+        },
+        "quoteAvailable": {
+          "type": "boolean"
+        },
+        "sellers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/seller"
+          }
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retrievedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "model",
+        "family",
+        "status",
+        "productUrl",
+        "sampleBuyUrl",
+        "lifecycle",
+        "adiStock",
+        "leadTime",
+        "prices",
+        "sampleAvailable",
+        "quoteAvailable",
+        "sellers",
+        "message",
+        "retrievedAt"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

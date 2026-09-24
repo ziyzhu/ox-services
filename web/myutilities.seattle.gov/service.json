@@ -1,0 +1,85 @@
+{
+  "domain": "myutilities.seattle.gov",
+  "name": "Seattle Utility Services",
+  "description": "View City of Seattle utility accounts and bill details, and open the official portal to make a payment.",
+  "baseUrl": "https://myutilities.seattle.gov/eportal/#/billingoverview",
+  "faviconUrl": "https://myutilities.seattle.gov/eportal/assets/img/logoHome.png",
+  "actions": [
+    {
+      "id": "listAccounts",
+      "label": "List utility accounts",
+      "description": "List signed-in City of Seattle utility accounts with balances, due dates, and billing status.",
+      "requireAuth": true,
+      "requireApproval": false,
+      "blocking": true,
+      "inputSchema": {"type":"object","properties":{},"additionalProperties":false},
+      "outputSchema": {"type":"object","required":["accounts","nextCursor"],"properties":{"accounts":{"type":"array","items":{"$ref":"#/$defs/account"}},"nextCursor":{"type":"null"}},"additionalProperties":false}
+    },
+    {
+      "id": "getBill",
+      "label": "Inspect a bill",
+      "description": "Read current bill details for one account returned by List utility accounts.",
+      "requireAuth": true,
+      "requireApproval": false,
+      "blocking": true,
+      "inputSchema": {"type":"object","required":["accountId"],"properties":{"accountId":{"type":"string","minLength":1,"description":"Opaque account identifier returned by listAccounts."}},"additionalProperties":false},
+      "outputSchema": {"$ref":"#/$defs/account"}
+    },
+    {
+      "id": "preparePayment",
+      "label": "Prepare bill payment",
+      "description": "Prepare the official payment page for an account and amount; final submission remains with the user.",
+      "requireAuth": true,
+      "requireApproval": true,
+      "blocking": true,
+      "inputSchema": {"type":"object","required":["accountId","amount"],"properties":{"accountId":{"type":"string","minLength":1,"description":"Opaque account identifier returned by listAccounts."},"amount":{"type":"number","exclusiveMinimum":0,"maximum":100000,"description":"Payment amount in US dollars."}},"additionalProperties":false},
+      "outputSchema": {"type":"object","required":["paymentId","accountId","amount","currency","url"],"properties":{"paymentId":{"type":"string"},"accountId":{"type":"string"},"amount":{"type":"number"},"currency":{"type":"string","enum":["USD"]},"url":{"type":"string"}},"additionalProperties":false}
+    },
+    {
+      "id": "getPaymentUrl",
+      "label": "Open payment checkout",
+      "description": "Open the official City of Seattle utility payment page.",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {"type":"object","required":["paymentId","accountId","amount"],"properties":{"paymentId":{"type":"string","minLength":1},"accountId":{"type":"string","minLength":1},"amount":{"type":"number","exclusiveMinimum":0,"maximum":100000}},"additionalProperties":false},
+      "outputSchema": {"type":"object","required":["url"],"properties":{"url":{"type":"string"}},"additionalProperties":false}
+    },
+    {
+      "id": "getPaymentState",
+      "label": "Check payment status",
+      "description": "Check whether a prepared payment has completed.",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {"type":"object","required":["paymentId","accountId","amount"],"properties":{"paymentId":{"type":"string","minLength":1},"accountId":{"type":"string","minLength":1},"amount":{"type":"number","exclusiveMinimum":0,"maximum":100000},"since":{"type":"string"}},"additionalProperties":false},
+      "outputSchema": {"type":"object","required":["status","reference","total","currency"],"properties":{"status":{"type":"string","enum":["none","pending","completed"]},"reference":{"type":["string","null"]},"total":{"type":"number"},"currency":{"type":"string","enum":["USD"]},"completedAt":{"type":["string","null"]}},"additionalProperties":false}
+    },
+    {
+      "id": "getSignInUrl",
+      "label": "Open sign in",
+      "description": "Open the City of Seattle utility portal sign-in page.",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {"type":"object","properties":{},"additionalProperties":false},
+      "outputSchema": {"type":"object","required":["url"],"properties":{"url":{"type":"string"}},"additionalProperties":false}
+    },
+    {
+      "id": "getSignInState",
+      "label": "Check sign-in state",
+      "description": "Check the current utility portal session against a protected server endpoint.",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {"type":"object","properties":{},"additionalProperties":false},
+      "outputSchema": {"type":"object","required":["signedIn"],"properties":{"signedIn":{"type":"boolean"}},"additionalProperties":false}
+    }
+  ],
+  "$defs": {
+    "account": {
+      "type":"object",
+      "required":["accountId","maskedAccountNumber","serviceAddress","accountBalance","currentAmountDue","pastDueAmount","totalAmountDue","billDate","dueDate","lastPaymentAmount","lastPaymentDate","autoPayEnabled","paperlessBilling"],
+      "properties": {
+        "accountId":{"type":"string"},"maskedAccountNumber":{"type":"string"},"serviceAddress":{"type":["string","null"]},"accountBalance":{"type":["number","null"]},"currentAmountDue":{"type":["number","null"]},"pastDueAmount":{"type":["number","null"]},"totalAmountDue":{"type":["number","null"]},"billDate":{"type":["string","null"]},"dueDate":{"type":["string","null"]},"lastPaymentAmount":{"type":["number","null"]},"lastPaymentDate":{"type":["string","null"]},"autoPayEnabled":{"type":["boolean","null"]},"paperlessBilling":{"type":["boolean","null"]}
+      },
+      "additionalProperties":false
+    }
+  }
+}

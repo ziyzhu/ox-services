@@ -1,0 +1,562 @@
+{
+    "domain": "v2ex.com",
+    "name": "V2EX",
+    "description": "V2EX is a technology community. Browse hot and latest topics, read discussions, explore topic nodes, and view member profiles.",
+    "baseUrl": "https://v2ex.com/",
+    "$defs": {
+        "topic": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "content_rendered": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "integer"
+                },
+                "last_touched": {
+                    "type": "integer"
+                },
+                "last_reply_by": {
+                    "type": "string"
+                },
+                "replies": {
+                    "type": "integer"
+                },
+                "node": {
+                    "$ref": "#/$defs/nodeSummary"
+                },
+                "member": {
+                    "$ref": "#/$defs/memberSummary"
+                }
+            },
+            "required": [
+                "id",
+                "title",
+                "url",
+                "created",
+                "node",
+                "member"
+            ],
+            "additionalProperties": false
+        },
+        "nodeSummary": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "title_alternative": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "topics": {
+                    "type": "integer"
+                },
+                "header": {
+                    "type": "string"
+                },
+                "footer": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "title",
+                "url"
+            ],
+            "additionalProperties": false
+        },
+        "memberSummary": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "website": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "tagline": {
+                    "type": "string"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "integer"
+                },
+                "twitter": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "github": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "username",
+                "url"
+            ],
+            "additionalProperties": false
+        },
+        "reply": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "content_rendered": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "integer"
+                },
+                "topic_id": {
+                    "type": "integer"
+                },
+                "member": {
+                    "$ref": "#/$defs/memberSummary"
+                }
+            },
+            "required": [
+                "id",
+                "content",
+                "created",
+                "topic_id",
+                "member"
+            ],
+            "additionalProperties": false
+        },
+        "node": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "title_alternative": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "topics": {
+                    "type": "integer"
+                },
+                "stars": {
+                    "type": "integer"
+                },
+                "header": {
+                    "type": "string"
+                },
+                "footer": {
+                    "type": "string"
+                },
+                "aliases": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "parent_node_name": {
+                    "type": "string"
+                },
+                "root": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "title",
+                "url"
+            ],
+            "additionalProperties": false
+        },
+        "member": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "website": {
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "psn": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "github": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "btc": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "location": {
+                    "type": "string"
+                },
+                "tagline": {
+                    "type": "string"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "integer"
+                },
+                "last_modified": {
+                    "type": "integer"
+                },
+                "pro": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "id",
+                "username",
+                "url"
+            ],
+            "additionalProperties": false
+        },
+        "nodeListItem": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "topics": {
+                    "type": "integer"
+                },
+                "aliases": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "title"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "actions": [
+        {
+            "id": "getHotTopics",
+            "label": "Get hot topics",
+            "description": "Gets the hottest topics currently trending on V2EX.",
+            "inputSchema": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/topic"
+                        }
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "additionalProperties": false
+            },
+            "defaultArgs": {},
+            "requireApproval": false,
+            "requireAuth": false
+        },
+        {
+            "id": "getLatestTopics",
+            "label": "Get latest topics",
+            "description": "Gets the most recently created topics on V2EX.",
+            "inputSchema": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/topic"
+                        }
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "additionalProperties": false
+            },
+            "defaultArgs": {},
+            "requireApproval": false,
+            "requireAuth": false
+        },
+        {
+            "id": "getTopic",
+            "label": "Get a topic",
+            "description": "Gets details of a specific topic by its ID.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "The topic ID."
+                    }
+                },
+                "required": [
+                    "id"
+                ],
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/topic"
+                        }
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "additionalProperties": false
+            },
+            "requireApproval": false,
+            "requireAuth": false
+        },
+        {
+            "id": "getNodeTopics",
+            "label": "Get node topics",
+            "description": "Gets topics in a specific node (e.g., 'python', 'programmer', 'jobs').",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "node": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "The node name, such as 'python' or 'programmer'."
+                    },
+                    "page": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1,
+                        "description": "Page number for pagination."
+                    }
+                },
+                "required": [
+                    "node"
+                ],
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/topic"
+                        }
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "additionalProperties": false
+            },
+            "requireApproval": false,
+            "requireAuth": false
+        },
+        {
+            "id": "getReplies",
+            "label": "Get topic replies",
+            "description": "Gets replies to a specific topic.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "topicId": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "The topic ID."
+                    },
+                    "page": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1,
+                        "description": "Page number for pagination."
+                    }
+                },
+                "required": [
+                    "topicId"
+                ],
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/reply"
+                        }
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "additionalProperties": false
+            },
+            "requireApproval": false,
+            "requireAuth": false
+        },
+        {
+            "id": "getNode",
+            "label": "Get node details",
+            "description": "Gets details of a specific node by its name.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "The node name, such as 'python' or 'programmer'."
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "$ref": "#/$defs/node"
+            },
+            "requireApproval": false,
+            "requireAuth": false
+        },
+        {
+            "id": "listNodes",
+            "label": "List all nodes",
+            "description": "Lists all topic nodes on V2EX, sorted by topic count.",
+            "inputSchema": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/nodeListItem"
+                        }
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "additionalProperties": false
+            },
+            "defaultArgs": {},
+            "requireApproval": false,
+            "requireAuth": false
+        },
+        {
+            "id": "getMember",
+            "label": "Get member profile",
+            "description": "Gets a member's profile information by username.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "The V2EX username."
+                    }
+                },
+                "required": [
+                    "username"
+                ],
+                "additionalProperties": false
+            },
+            "outputSchema": {
+                "$ref": "#/$defs/member"
+            },
+            "requireApproval": false,
+            "requireAuth": false
+        }
+    ],
+    "faviconUrl": "https://v2ex.com/static/favicon.ico"
+}

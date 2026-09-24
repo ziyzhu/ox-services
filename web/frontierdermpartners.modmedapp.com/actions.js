@@ -13,28 +13,33 @@ const optionalNumber = (value) => {
     const number = Number(value);
     return value == null || !Number.isFinite(number) ? null : number;
 };
-const log = (...values) => console.log(...values);
-const retryFetch = async (input, init, options) => {
-    const retries = options?.retries ?? 3;
-    const delay = options?.delay ?? 400;
-    const factor = options?.factor ?? 2;
-    for (let attempt = 0; ; attempt++) {
-        try {
-            const response = await window.fetch(input, init);
-            const retryable = response.status === 408 || response.status === 429 || (response.status >= 500 && response.status <= 599);
-            if (response.ok || !retryable || attempt >= retries)
-                return response;
-        }
-        catch (error) {
-            const message = String(error?.message ?? "");
-            const retryable = message.includes("Load failed") || message.includes("NetworkError") || message.includes("Failed to fetch");
-            if (!retryable || attempt >= retries)
-                throw error;
-        }
-        await new Promise(resolve => setTimeout(resolve, delay * Math.pow(factor, attempt)));
-    }
-};
 window.ox.install(({ action }) => {
+const retryFetch = async (input, init, options) => {
+  const method = String(init?.method ?? "GET").toUpperCase();
+  const retries = ["GET", "HEAD"].includes(method) ? (options?.retries ?? 3) : 0;
+  const delay = options?.delay ?? 400;
+  const factor = options?.factor ?? 2;
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const response = await window.fetch(input, init);
+      const retryable = response.status === 408 || response.status === 429
+        || (response.status >= 500 && response.status <= 599);
+      if (response.ok || !retryable || attempt >= retries) return response;
+      console.log(`retryFetch: status ${response.status}, attempt ${attempt + 1}/${retries}`);
+    } catch (error) {
+      const message = String(error?.message ?? "");
+      const retryable = message.includes("Load failed")
+        || message.includes("NetworkError")
+        || message.includes("Failed to fetch");
+      if (!retryable || attempt >= retries) throw error;
+      console.log(`retryFetch: network ${JSON.stringify(message)}, attempt ${attempt + 1}/${retries}`);
+    }
+    await new Promise(resolve => setTimeout(resolve, delay * Math.pow(factor, attempt)));
+  }
+};
+
+
+const log = (...args) => console.log(...args);
     let navigationTail = Promise.resolve();
     const withNavigation = async (work) => {
         const previous = navigationTail;

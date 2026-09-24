@@ -1,0 +1,178 @@
+{
+  "domain": "ticketmaster.com",
+  "name": "Ticketmaster",
+  "description": "Search Ticketmaster's public event listings and return ticketed events with dates, venues, availability, and links.",
+  "baseUrl": "https://www.ticketmaster.com/robots.txt",
+  "actions": [
+    {
+      "id": "searchTickets",
+      "label": "Search tickets",
+      "description": "Search Ticketmaster's public event listings by keyword.",
+      "baseUrl": "https://www.ticketmaster.com/search?q={query}",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Artist, team, event, venue, or other search text."
+          },
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]+$",
+            "description": "Page cursor returned by a previous search."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 20
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "timeZone": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "url": {
+                  "type": "string"
+                },
+                "venue": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "city": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "state": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "country": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "city",
+                    "state",
+                    "country"
+                  ]
+                },
+                "category": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "artists": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "soldOut": {
+                  "type": "boolean"
+                },
+                "limitedAvailability": {
+                  "type": "boolean"
+                },
+                "cancelled": {
+                  "type": "boolean"
+                },
+                "postponed": {
+                  "type": "boolean"
+                },
+                "rescheduled": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "startDate",
+                "timeZone",
+                "url",
+                "venue",
+                "category",
+                "artists",
+                "soldOut",
+                "limitedAvailability",
+                "cancelled",
+                "postponed",
+                "rescheduled"
+              ]
+            }
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "nextCursor"
+        ]
+      }
+    }
+  ],
+  "faviconUrl": "https://s1.ticketm.net/en-us/img/static/mobile/23/app-t.png"
+}

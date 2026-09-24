@@ -1,0 +1,163 @@
+{
+  "domain": "qmq.app",
+  "name": "QMQ",
+  "description": "Read reported U.S. visa availability status in mainland Chinese cities, including H-1B. Human verification may be required. Read-only; exact dates and booking are not supported.",
+  "baseUrl": "https://qmq.app/",
+  "faviconUrl": "https://qmq.app/favicon.png",
+  "actions": [
+    {
+      "id": "getAvailability",
+      "label": "Read China visa availability",
+      "description": "Read QMQ reported availability status by mainland Chinese city and visa category. Defaults to H-1B. Exact appointment dates are not retrieved. If verificationRequired, complete the security handoff and retry; missing categories do not mean no appointments.",
+      "requireAuth": false,
+      "requireApproval": false,
+      "blocking": true,
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "visaType": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 30,
+            "default": "H-1B"
+          },
+          "city": {
+            "type": "string",
+            "enum": [
+              "武汉",
+              "上海",
+              "沈阳",
+              "北京",
+              "广州"
+            ]
+          }
+        }
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "state",
+          "items",
+          "checkedAt",
+          "sourceUrl",
+          "note"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "verificationRequired"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "city",
+                "visaType",
+                "category",
+                "status",
+                "datesState"
+              ],
+              "properties": {
+                "city": {
+                  "type": "string"
+                },
+                "visaType": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "available",
+                    "limited",
+                    "unavailable"
+                  ]
+                },
+                "datesState": {
+                  "type": "string",
+                  "enum": [
+                    "notRetrieved"
+                  ]
+                }
+              }
+            }
+          },
+          "checkedAt": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "id": "getBotControlUrl",
+      "label": "Open QMQ verification",
+      "description": "Open the QMQ availability page for the user to complete its security check.",
+      "requireAuth": false,
+      "requireApproval": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "getBotControlState",
+      "label": "Check QMQ verification",
+      "description": "Check whether the live availability table has loaded. Does not solve challenges or read verification tokens.",
+      "requireAuth": false,
+      "requireApproval": false,
+      "blocking": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "pageUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pageUrl"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

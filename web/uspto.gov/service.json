@@ -1,0 +1,399 @@
+{
+  "domain": "uspto.gov",
+  "name": "USPTO",
+  "description": "Search public U.S. patent, trademark, and USPTO guidance records, and check a signed-in USPTO account.",
+  "baseUrl": "https://www.uspto.gov/",
+  "actions": [
+    {
+      "id": "searchSite",
+      "label": "Search USPTO.gov",
+      "description": "Search public USPTO guidance and resource pages.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 25,
+            "default": 10
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "url",
+                "description"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ],
+        "additionalProperties": false
+      },
+      "requireAuth": false,
+      "requireApproval": false,
+      "baseUrl": "https://www.uspto.gov/search?searchDomain=USPTO&source=homepage&fresh=1&q={query}"
+    },
+    {
+      "id": "searchTrademarks",
+      "label": "Search trademarks",
+      "description": "Search public USPTO trademark records by wordmark.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 20
+          },
+          "cursor": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "wordmark": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "alive": {
+                  "type": "boolean"
+                },
+                "filedDate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "registrationId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "registrationDate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "ownerNames": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "internationalClasses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "markTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "goodsAndServices": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "wordmark",
+                "alive",
+                "filedDate",
+                "registrationId",
+                "registrationDate",
+                "ownerNames",
+                "internationalClasses",
+                "markTypes",
+                "goodsAndServices"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "total"
+        ],
+        "additionalProperties": false
+      },
+      "requireAuth": false,
+      "requireApproval": false,
+      "baseUrl": "https://tmsearch.uspto.gov/search/search-information"
+    },
+    {
+      "id": "getTrademark",
+      "label": "Get trademark",
+      "description": "Get one public trademark record returned by trademark search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9]{8}$"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "wordmark": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "alive": {
+            "type": "boolean"
+          },
+          "filedDate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "registrationId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "registrationDate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ownerNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "internationalClasses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "markTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "goodsAndServices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "attorney": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "markDescriptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "designCodeDescriptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "wordmark",
+          "alive",
+          "filedDate",
+          "registrationId",
+          "registrationDate",
+          "ownerNames",
+          "internationalClasses",
+          "markTypes",
+          "goodsAndServices",
+          "attorney",
+          "markDescriptions",
+          "designCodeDescriptions"
+        ],
+        "additionalProperties": false
+      },
+      "requireAuth": false,
+      "requireApproval": false,
+      "baseUrl": "https://tmsearch.uspto.gov/search/search-information"
+    },
+    {
+      "id": "getSignInUrl",
+      "label": "Get sign-in URL",
+      "description": "Open USPTO sign-in through Patent Center.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "requireAuth": false,
+      "requireApproval": false,
+      "baseUrl": "https://patentcenter.uspto.gov/"
+    },
+    {
+      "id": "getSignInState",
+      "label": "Check sign-in state",
+      "description": "Check the live USPTO server session.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "signedIn": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "signedIn"
+        ],
+        "additionalProperties": false
+      },
+      "requireAuth": false,
+      "requireApproval": false,
+      "baseUrl": "https://patentcenter.uspto.gov/"
+    },
+    {
+      "id": "getAccountAccess",
+      "label": "Get account access",
+      "description": "Read the signed-in Patent Center access levels without exposing identity details.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "accessLevel": {
+            "type": "string"
+          },
+          "retrievalAccessLevel": {
+            "type": "string"
+          },
+          "filingAccessLevel": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessLevel",
+          "retrievalAccessLevel",
+          "filingAccessLevel"
+        ],
+        "additionalProperties": false
+      },
+      "requireAuth": true,
+      "requireApproval": false,
+      "baseUrl": "https://patentcenter.uspto.gov/"
+    }
+  ]
+}
