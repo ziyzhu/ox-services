@@ -21,7 +21,21 @@
     "web:reddit.com",
     "web:amctheatres.com",
     "web:cinemark.com",
-    "web:aitinkerers.org"
+    "web:aitinkerers.org",
+    "web:analog.com",
+    "web:appstoreconnect.apple.com",
+    "web:chatgpt.com",
+    "web:github.com",
+    "web:jiqizhixin.com",
+    "web:linkedin.com",
+    "web:mixpanel.com",
+    "web:myutilities.seattle.gov",
+    "web:outlook.live.com",
+    "web:qmq.app",
+    "web:ticketmaster.com",
+    "web:uspto.gov",
+    "web:v2ex.com",
+    "web:www.doordash.com"
   ],
   "skills": [
     "clinical-trials",

@@ -1,0 +1,30 @@
+{
+  "domain": "chatgpt.com",
+  "name": "ChatGPT",
+  "description": "Chat with ChatGPT as a guest without requiring an account.",
+  "baseUrl": "https://chatgpt.com/",
+  "faviconUrl": "https://chatgpt.com/unauth-mweb/apple-touch-icon.png",
+  "actions": [
+    {
+      "id": "chat",
+      "label": "Chat",
+      "description": "Start a fresh guest conversation and return ChatGPT's completed response.",
+      "baseUrl": "https://chatgpt.com/",
+      "blocking": true,
+      "requireAuth": false,
+      "requireApproval": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {"message": {"type": "string", "minLength": 1, "maxLength": 32000, "description": "The message to send to ChatGPT."}},
+        "required": ["message"],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {"response": {"type": "string", "description": "ChatGPT's completed response as rendered text."}},
+        "required": ["response"],
+        "additionalProperties": false
+      }
+    }
+  ]
+}
