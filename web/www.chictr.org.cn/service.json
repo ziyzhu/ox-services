@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "domain": "www.chictr.org.cn",
   "name": "Chinese Clinical Trial Registry",
   "description": "A WHO primary registry for clinical research. Search registered trials by public title and read study designs, eligibility criteria, interventions, locations, outcomes, recruitment details, and data-sharing plans. Public and read-only; no sign-in required.",

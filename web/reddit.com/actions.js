@@ -1,4 +1,4 @@
-window.ox.install(1, ({ action, retryFetch, lib }) => {
+window.ox.install(({ action, retryFetch, lib }) => {
   const { cleanText } = lib;
   const enc = encodeURIComponent;
   const int = (v, d) => Number.isInteger(v) ? v : d;

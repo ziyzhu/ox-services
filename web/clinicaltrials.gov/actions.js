@@ -174,7 +174,7 @@ const adverseEvent = (value) => ({
     ...optional("notes", text(value?.notes)),
     stats: list(value?.stats).map(groupValue),
 });
-window.ox.install(1, ({ action, retryFetch, log }) => {
+window.ox.install(({ action, retryFetch, log }) => {
     const apiJson = async (path, params) => {
         const url = `${API}${path}${params ? `?${params}` : ""}`;
         const response = await retryFetch(url, {

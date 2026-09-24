@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "domain": "cinemark.com",
   "name": "Cinemark",
   "description": "Find nearby Cinemark theaters and official movie dates and showtimes.",

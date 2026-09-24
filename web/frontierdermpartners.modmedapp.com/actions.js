@@ -13,7 +13,7 @@ const optionalNumber = (value) => {
     const number = Number(value);
     return value == null || !Number.isFinite(number) ? null : number;
 };
-window.ox.install(1, ({ action, retryFetch, log }) => {
+window.ox.install(({ action, retryFetch, log }) => {
     let navigationTail = Promise.resolve();
     const withNavigation = async (work) => {
         const previous = navigationTail;

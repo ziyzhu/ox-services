@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "domain": "aitinkerers.org",
   "name": "AI Tinkerers",
   "description": "Browse public AI Tinkerers events and posts, search listings, and use the site sign-in handoff.",

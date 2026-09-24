@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "domain": "redfin.com",
   "name": "Redfin",
   "description": "Browse public Redfin home results by URL and read property details, descriptions, and photos. Read-only; no account changes.",

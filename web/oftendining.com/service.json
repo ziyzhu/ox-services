@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "domain": "oftendining.com",
   "name": "Often Dining",
   "description": "Online ordering platform for local restaurants. Search nearby restaurants by location, browse a restaurant's menu with prices and photos, and build a priced pickup cart; the user reviews and pays in the restaurant's own checkout, and the receipt is readable afterward by invoice id.",

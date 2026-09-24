@@ -17,7 +17,7 @@ async function page(limit,cursor) {
  if(cursor && j.nextCursor===cursor) throw new Error('Catalog cursor did not advance');
  return j;
 }
-window.ox.install(2,({action})=>{
+window.ox.install(({action})=>{
  action('listSettlements',{async invoke(args){const j=await page(args.limit??25,args.cursor);return {items:j.items.map(summary),nextCursor:j.nextCursor};}});
  action('searchSettlements',{async invoke(args){
  const query=args.query.trim().toLowerCase(); if(!query) throw new Error('Search query must not be blank');

@@ -8,7 +8,7 @@ const pageConfiguration = () => {
     const appd = source.match(/[?&]appd=([0-9a-f-]{36})/i)?.[1];
     return { applicationId, appd };
 };
-window.ox.install(1, ({ action, log, lib }) => {
+window.ox.install(({ action, log, lib }) => {
     const { cleanText } = lib;
     const readJson = async (response, label) => {
         if (response.status === 401)

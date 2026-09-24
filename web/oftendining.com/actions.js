@@ -15,7 +15,7 @@ const ceilMinutes = (d, step) => {
     out.setMinutes(Math.ceil(d.getMinutes() / step) * step);
     return out;
 };
-window.ox.install(1, ({ action, retryFetch, log, lib }) => {
+window.ox.install(({ action, retryFetch, log, lib }) => {
     const { cleanText, pageCursor } = lib;
     const enginePost = async (path, submitType, json, opts) => {
         const body = new URLSearchParams();

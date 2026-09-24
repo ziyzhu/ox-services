@@ -45,7 +45,7 @@ const ageValue = (root, label) => {
     const unitCell = valueCell.nextElementSibling;
     return cleanText(`${value} ${englishText(unitCell)}`);
 };
-window.ox.install(1, ({ action, log, lib }) => {
+window.ox.install(({ action, log, lib }) => {
     const { cleanText, pageCursor } = lib;
     action("searchTrials", {
         async invoke({ query, cursor, }) {

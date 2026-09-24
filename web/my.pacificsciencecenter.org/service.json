@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "domain": "my.pacificsciencecenter.org",
   "name": "Pacific Science Center",
   "description": "Seattle's hands-on science museum. Search events and showtimes, check availability and prices, prepare a ticket cart, finish checkout on the museum's page, and read the completed receipt.",

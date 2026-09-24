@@ -1,4 +1,4 @@
-window.ox.install(1, ({ action, retryFetch }) => {
+window.ox.install(({ action, retryFetch }) => {
     const API = "https://qao9lxc60h.execute-api.us-west-2.amazonaws.com/prod";
     const getJson = async (path) => {
         const res = await retryFetch(`${API}${path}`);

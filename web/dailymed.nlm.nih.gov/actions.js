@@ -27,7 +27,7 @@ const readableText = (element) => {
     copy.querySelectorAll("br, p, li, tr, td, th, h1, h2, h3, h4").forEach((node) => node.before(" "));
     return cleanText(copy.textContent);
 };
-window.ox.install(1, ({ action, retryFetch, log, lib }) => {
+window.ox.install(({ action, retryFetch, log, lib }) => {
     const { cleanText, pageCursor } = lib;
     const fetchDocument = async (url) => {
         const response = await retryFetch(url, { credentials: "omit" });

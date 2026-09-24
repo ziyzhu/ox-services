@@ -62,7 +62,7 @@ const cartItem = (item, currency = "USD") => ({
         ? null
         : identifier(item.selling_plan_allocation.selling_plan.id),
 });
-window.ox.install(1, ({ action, retryFetch, log, lib }) => {
+window.ox.install(({ action, retryFetch, log, lib }) => {
     const { cleanText } = lib;
     const fetchJson = async (path, init) => {
         const response = await retryFetch(`${BASE}${path}`, { credentials: "include", ...init });

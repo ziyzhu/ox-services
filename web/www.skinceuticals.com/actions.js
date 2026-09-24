@@ -150,7 +150,7 @@ const parseCart = (document) => {
     const total = totalValue(/Estimated Total/i) || subtotal;
     return { items, subtotal, total, currency: items[0]?.currency ?? "USD" };
 };
-window.ox.install(1, ({ action, retryFetch, log, lib }) => {
+window.ox.install(({ action, retryFetch, log, lib }) => {
     const { cleanText, pageCursor } = lib;
     const fetchDocument = async (url) => {
         const response = await retryFetch(url, { credentials: "include" });

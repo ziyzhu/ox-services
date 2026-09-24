@@ -1,4 +1,4 @@
-window.ox.install(1, ({ action, retryFetch, log, lib }) => {
+window.ox.install(({ action, retryFetch, log, lib }) => {
     const { cleanText } = lib;
     const BASE = "https://www.inhousepharmacy.vu";
     const absoluteUrl = (value) => {

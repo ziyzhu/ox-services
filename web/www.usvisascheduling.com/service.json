@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "domain": "www.usvisascheduling.com",
   "name": "USTravelDocs",
   "description": "U.S. visa appointment scheduling. Check the current application's consular post and available appointment dates without booking or rescheduling.",

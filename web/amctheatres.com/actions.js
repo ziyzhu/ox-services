@@ -1,4 +1,4 @@
-window.ox.install(1, ({ action, retryFetch, lib }) => {
+window.ox.install(({ action, retryFetch, lib }) => {
   const { cleanText } = lib;
   const origin = "https://www.amctheatres.com";
   const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

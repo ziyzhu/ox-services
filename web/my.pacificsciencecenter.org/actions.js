@@ -113,7 +113,7 @@ const isSince = (orderDate, since) => {
         throw new Error("Invalid transaction date scope");
     return order.getTime() + 59_999 >= start.getTime();
 };
-window.ox.install(1, ({ action, retryFetch, log, lib }) => {
+window.ox.install(({ action, retryFetch, log, lib }) => {
     const { cleanText } = lib;
     const fetchDocument = async (url) => {
         const response = await retryFetch(url, { credentials: "include" });

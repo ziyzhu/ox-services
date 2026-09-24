@@ -1,4 +1,4 @@
-window.ox.install(1, ({ action, lib, log }) => {
+window.ox.install(({ action, lib, log }) => {
   const clean = (v, max = 12000) => String(v || '').replace(/\s+/g, ' ').trim().slice(0, max);
   const sameSite = (url) => { const u = new URL(url, location.href); if (!/(^|\.)aitinkerers\.org$/.test(u.hostname)) throw new Error('URL must be on aitinkerers.org'); return u.href; };
   action('readPost', { async invoke(args) {

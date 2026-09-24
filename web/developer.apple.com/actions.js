@@ -1,4 +1,4 @@
-window.ox.install(1, ({ action, retryFetch, log, lib }) => {
+window.ox.install(({ action, retryFetch, log, lib }) => {
     const { cleanText, pageCursor } = lib;
     const ORIGIN = "https://developer.apple.com";
     const DATA = `${ORIGIN}/tutorials/data`;
