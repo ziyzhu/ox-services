@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 3,
   "name": "Ox Services",
   "services": [
     "mcp:aws",
@@ -22,5 +22,9 @@
     "web:amctheatres.com",
     "web:cinemark.com",
     "web:aitinkerers.org"
+  ],
+  "skills": [
+    "clinical-trials",
+    "security-questions"
   ]
 }

@@ -1,6 +1,7 @@
 ---
 name: clinical-trials
 description: Search and interpret ClinicalTrials.gov study registrations and posted results. Use when finding trials, assessing registered eligibility and recruiting sites, comparing study designs, or summarizing registry results.
+services: clinicaltrials.gov
 ---
 
 # ClinicalTrials.gov

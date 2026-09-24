@@ -1,5 +1,4 @@
 {
-  "version": 1,
   "domain": "clinicaltrials.gov",
   "name": "ClinicalTrials.gov",
   "description": "The U.S. National Library of Medicine registry for clinical studies. Search studies, inspect eligibility and recruiting locations, and read posted results. Public and read-only; no sign-in required.",
@@ -1339,11 +1338,5 @@
       }
     }
   },
-  "faviconUrl": "https://openox.ai/assets/services/clinicaltrials.gov/favicon.png",
-  "skills": [
-    {
-      "name": "clinical-trials",
-      "description": "Search and interpret ClinicalTrials.gov study registrations and posted results. Use when finding trials, assessing registered eligibility and recruiting sites, comparing study designs, or summarizing registry results."
-    }
-  ]
+  "faviconUrl": "https://openox.ai/assets/services/clinicaltrials.gov/favicon.png"
 }

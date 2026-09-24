@@ -1,5 +1,4 @@
 {
-  "version": 1,
   "domain": "reddit.com",
   "name": "Reddit",
   "description": "Search and browse public Reddit posts, comments, communities, and user activity. Read-only.",

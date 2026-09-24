@@ -45,8 +45,10 @@ const ageValue = (root, label) => {
     const unitCell = valueCell.nextElementSibling;
     return cleanText(`${value} ${englishText(unitCell)}`);
 };
-window.ox.install(({ action, log, lib }) => {
-    const { cleanText, pageCursor } = lib;
+const cleanText = value => String(value ?? "").replace(/\s+/g, " ").trim();
+const pageCursor = (value, firstPage) => Math.max(firstPage, Number.parseInt(value ?? String(firstPage), 10) || firstPage);
+const log = (...values) => console.log(...values);
+window.ox.install(({ action }) => {
     action("searchTrials", {
         async invoke({ query, cursor, }) {
             if (!query)

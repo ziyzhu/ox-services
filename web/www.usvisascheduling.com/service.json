@@ -1,5 +1,4 @@
 {
-  "version": 1,
   "domain": "www.usvisascheduling.com",
   "name": "USTravelDocs",
   "description": "U.S. visa appointment scheduling. Check the current application's consular post and available appointment dates without booking or rescheduling.",
@@ -107,11 +106,5 @@
       "requireAuth": true
     }
   ],
-  "faviconUrl": "https://openox.ai/assets/services/www.usvisascheduling.com/favicon.png",
-  "skills": [
-    {
-      "name": "security-questions",
-      "description": "Handle USTravelDocs security-question prompts during sign-in. Use when the user asks which security questions are configured, authentication reaches the security-question step, or sign-in must be handed back to the user securely."
-    }
-  ]
+  "faviconUrl": "https://openox.ai/assets/services/www.usvisascheduling.com/favicon.png"
 }

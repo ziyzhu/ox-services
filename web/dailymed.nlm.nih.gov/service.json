@@ -1,5 +1,4 @@
 {
-  "version": 1,
   "domain": "dailymed.nlm.nih.gov",
   "name": "DailyMed",
   "description": "The official source for FDA drug label information. Search human and animal drug labels and read labeling sections, status details, and official downloads. Public and read-only; no sign-in required.",

@@ -1,5 +1,4 @@
 {
-  "version": 2,
   "domain": "zillow.com",
   "name": "Zillow",
   "description": "Browse public Zillow home results by results URL and read property details, photos, price history, and estimates. Read-only; no account changes.",

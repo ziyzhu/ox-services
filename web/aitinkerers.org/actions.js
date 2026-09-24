@@ -1,4 +1,4 @@
-window.ox.install(({ action, lib, log }) => {
+window.ox.install(({ action }) => {
   const clean = (v, max = 12000) => String(v || '').replace(/\s+/g, ' ').trim().slice(0, max);
   const sameSite = (url) => { const u = new URL(url, location.href); if (!/(^|\.)aitinkerers\.org$/.test(u.hostname)) throw new Error('URL must be on aitinkerers.org'); return u.href; };
   action('readPost', { async invoke(args) {
@@ -13,7 +13,7 @@ window.ox.install(({ action, lib, log }) => {
     const r = await fetch('https://aitinkerers.org/events', { credentials: 'include', cache: 'no-store' }); if (!r.ok) throw new Error('Post listing request failed: ' + r.status);
     const doc = new DOMParser().parseFromString(await r.text(), 'text/html'); const q = clean(args.query, 200).toLowerCase(); const limit = args.limit || 10; const seen = new Set(); const items = [];
     for (const a of doc.querySelectorAll('article a[href*="/p/"]')) { const url = new URL(a.href, 'https://aitinkerers.org/').href; const title = clean(a.textContent, 300); if (!title || seen.has(url)) continue; const card = a.closest('article, li, section, div') || a; const excerpt = clean(card.textContent, 500); if ((title+' '+excerpt).toLowerCase().includes(q)) { seen.add(url); items.push({url,title,excerpt}); if (items.length >= limit) break; } }
-    log({ action: 'searchPosts', phase: 'complete', resultCount: items.length }); return {items, nextCursor:null};
+    console.log({ action: 'searchPosts', phase: 'complete', resultCount: items.length }); return {items, nextCursor:null};
   }});
   action('getSignInUrl', { async invoke() { return {url:'https://aitinkerers.org/signin'}; }});
   action('getSignInState', { async invoke() {

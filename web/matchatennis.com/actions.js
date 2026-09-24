@@ -1,4 +1,24 @@
-window.ox.install(({ action, retryFetch }) => {
+const retryFetch = async (input, init, options) => {
+    const retries = options?.retries ?? 3;
+    const delay = options?.delay ?? 400;
+    const factor = options?.factor ?? 2;
+    for (let attempt = 0; ; attempt++) {
+        try {
+            const response = await window.fetch(input, init);
+            const retryable = response.status === 408 || response.status === 429 || (response.status >= 500 && response.status <= 599);
+            if (response.ok || !retryable || attempt >= retries)
+                return response;
+        }
+        catch (error) {
+            const message = String(error?.message ?? "");
+            const retryable = message.includes("Load failed") || message.includes("NetworkError") || message.includes("Failed to fetch");
+            if (!retryable || attempt >= retries)
+                throw error;
+        }
+        await new Promise(resolve => setTimeout(resolve, delay * Math.pow(factor, attempt)));
+    }
+};
+window.ox.install(({ action }) => {
     const API = "https://qao9lxc60h.execute-api.us-west-2.amazonaws.com/prod";
     const getJson = async (path) => {
         const res = await retryFetch(`${API}${path}`);

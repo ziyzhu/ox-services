@@ -8,8 +8,9 @@ const pageConfiguration = () => {
     const appd = source.match(/[?&]appd=([0-9a-f-]{36})/i)?.[1];
     return { applicationId, appd };
 };
-window.ox.install(({ action, log, lib }) => {
-    const { cleanText } = lib;
+const cleanText = value => String(value ?? "").replace(/\s+/g, " ").trim();
+const log = (...values) => console.log(...values);
+window.ox.install(({ action }) => {
     const readJson = async (response, label) => {
         if (response.status === 401)
             throw signedOut();
